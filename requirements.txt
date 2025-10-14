@@ -1,0 +1,17 @@
+# In requirements.txt
+
+pandas
+tqdm
+
+# For ML/DL
+torch
+tensorflow
+scikit-learn
+
+# For CRF
+sklearn-crfsuite
+
+
+# python -m venv .venv
+# .venv\Scripts\activate
+ 

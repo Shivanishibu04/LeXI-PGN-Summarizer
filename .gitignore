@@ -1,0 +1,18 @@
+# In .gitignore
+
+# Virtual Environment
+.venv/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# VS Code
+.vscode/
+
+# Data - It's often better to not track large data files with Git
+data/processed/
+data/raw/
+
+# Saved Models
+saved_models/
