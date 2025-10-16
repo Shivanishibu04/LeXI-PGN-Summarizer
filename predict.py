@@ -58,6 +58,7 @@ print("All models loaded successfully.")
 
 def get_cnn_prediction_from_context(text, token_start_idx, cnn_model, char_to_idx, device):
     """
+    (This function remains the same)
     Identical to the function in crf_model.py. Gets the CNN's prediction.
     """
     token = text[token_start_idx]
@@ -73,72 +74,70 @@ def get_cnn_prediction_from_context(text, token_start_idx, cnn_model, char_to_id
     indexed_text = [char_to_idx.get(char, char_to_idx['<UNK>']) for char in sample_text]
     padded_text = indexed_text[:max_len] + [pad_idx] * (max_len - len(indexed_text))
     text_tensor = torch.tensor([padded_text], dtype=torch.long).to(device)
-    with torch.no_grad():
+    with torch.no_grad(): 
         prediction = cnn_model(text_tensor).item()
     return prediction
 
-# In predict.py -- REPLACE THIS FUNCTION
-
-# In predict.py -- REPLACE THE ENTIRE segment_text FUNCTION WITH THIS
+ # --- CHANGE HERE: REPLACING THE ENTIRE segment_text FUNCTION ---
 
 def segment_text(text, model, use_hybrid_features=False):
     """
     Takes raw text and uses a trained CRF model to split it into sentences.
-    Can be configured to generate hybrid features if needed.
+    This version uses the CORRECT tokenizer and has ROBUST sentence reconstruction.
     """
-    # 1. Get tokens and their spans
-    tokens_with_spans = [(m.group(0), m.start(), m.end()) for m in re.finditer(r"\S+|\n", text)]
+    # 1. Get tokens and their spans using the CORRECT regex that separates punctuation.
+    tokens_with_spans = [(m.group(0), m.start(), m.end()) for m in re.finditer(r"[\w'-]+|[.,!?;:()]|\S+", text)]
     
     if not tokens_with_spans:
         return []
 
-    # 2. Extract features for the tokens
+    # 2. Extract features for the tokens, exactly as done in training.
     sentence_features = []
     for token, start, end in tokens_with_spans:
         features = token_to_features(token, text, start, end)
         
         # If using the hybrid model, generate and add the CNN feature
         if use_hybrid_features and token in DELIMITERS:
-            delimiter_char_index = text.find(token, start)
-            if delimiter_char_index != -1:
-                 cnn_prob = get_cnn_prediction_from_context(text, delimiter_char_index, cnn_model, char_to_idx, device)
-                 features['cnn_prob'] = round(cnn_prob, 4)
+            # We need the character index, which is the start of the token span
+            cnn_prob = get_cnn_prediction_from_context(text, start, cnn_model, char_to_idx, device)
+            features['cnn_prob'] = round(cnn_prob, 4)
         
         sentence_features.append(features)
     
     sentence_features = add_neighboring_token_features(sentence_features)
 
-    # 3. Predict the labels ('B' or 'O') for the sequence
+    # 3. Predict the labels ('B' for Boundary, 'O' for Other) for the sequence
     labels = model.predict([sentence_features])[0]
 
-    # 4. Reconstruct sentences based on the predicted 'B' labels
+    # 4. Reconstruct sentences based on the predicted 'B' labels. This logic is much cleaner.
     sentences = []
-    current_sentence_tokens = []
-    for i, (token_data, label) in enumerate(zip(tokens_with_spans, labels)):
-        token, _start, _end = token_data
-        
-        current_sentence_tokens.append(token)
-        
+    current_sentence_start_index = 0
+    for i, label in enumerate(labels):
+        # A 'B' label means the token AT THIS INDEX is the end of a sentence.
         if label == 'B':
-            sentence_text = ""
-            for j, t in enumerate(current_sentence_tokens):
-                if j > 0 and t not in {'.', ',', '!', '?', ';', ':'} and current_sentence_tokens[j-1] != '\n':
-                    sentence_text += " "
-                sentence_text += t
-
-            sentences.append(sentence_text.strip())
+            # The sentence runs from the start index up to and including the current token.
+            sentence_end_char_index = tokens_with_spans[i][2] # Get the 'end' span of the boundary token
+            sentence_start_char_index = tokens_with_spans[current_sentence_start_index][1] # Get 'start' span
             
-            current_sentence_tokens = []
+            # Slice the original text to get the sentence perfectly formatted.
+            sentence = text[sentence_start_char_index:sentence_end_char_index].strip()
+            sentences.append(sentence)
+            
+            # The next sentence will start at the next token.
+            current_sentence_start_index = i + 1
     
-    if current_sentence_tokens:
-        sentence_text = ""
-        for j, t in enumerate(current_sentence_tokens):
-            if j > 0 and t not in {'.', ',', '!', '?', ';', ':'} and current_sentence_tokens[j-1] != '\n':
-                sentence_text += " "
-            sentence_text += t
-        sentences.append(sentence_text.strip())
+    # After the loop, check if there are any leftover tokens that form a final sentence.
+    if current_sentence_start_index < len(tokens_with_spans):
+        # The final sentence runs from the start index to the very end of the text.
+        sentence_start_char_index = tokens_with_spans[current_sentence_start_index][1]
+        sentence = text[sentence_start_char_index:].strip()
+        if sentence: # Make sure it's not just whitespace
+             sentences.append(sentence)
         
     return sentences
+
+# --- END OF CHANGES ---
+
 
 # --- 4. Define a sample legal text and Run Predictions ---
 sample_legal_text = """

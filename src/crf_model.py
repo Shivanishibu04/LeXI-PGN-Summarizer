@@ -88,8 +88,10 @@ def prepare_data_for_crf(file_path, cnn_model=None, char_to_idx=None, device=Non
             except KeyError:
                 continue
 
-            tokens_with_spans = [(m.group(0), m.start(), m.end()) for m in re.finditer(r"\S+|\n", text)]
-            
+            #tokens_with_spans = [(m.group(0), m.start(), m.end()) for m in re.finditer(r"\S+|\n", text)]
+            # This regex separates words from punctuation, which is critical.
+            tokens_with_spans = [(m.group(0), m.start(), m.end()) for m in re.finditer(r"[\w'-]+|[.,!?;:()]|\S+", text)]
+
             if not tokens_with_spans:
                 continue
             

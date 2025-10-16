@@ -1,5 +1,4 @@
-# In .gitignore
-
+# In gitigore
 # Virtual Environment
 .venv/
 
@@ -10,9 +9,20 @@ __pycache__/
 # VS Code
 .vscode/
 
-# Data - It's often better to not track large data files with Git
-data/processed/
-data/raw/
+# =========================
+# Data & Saved Models
+# =========================
 
-# Saved Models
-saved_models/
+# Include data folders
+!data/
+!data/raw/
+!data/processed/
+
+# Include saved models folder
+!saved_models/
+
+# But still ignore temporary or cache files inside them
+data/**/*.tmp
+data/**/*.log
+saved_models/**/*.tmp
+saved_models/**/*.log
