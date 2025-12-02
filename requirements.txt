@@ -11,6 +11,13 @@ scikit-learn
 # For CRF
 sklearn-crfsuite
 
+# For Summarization
+networkx
+nltk
+
+# Optional: For better embeddings (install separately if needed)
+# sentence-transformers
+
 
 # python -m venv .venv
 # .venv\Scripts\activate

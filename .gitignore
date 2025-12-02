@@ -1,6 +1,6 @@
 # In gitigore
 # Virtual Environment
-.venv/
+venv/
 
 # Python cache
 __pycache__/

@@ -1,0 +1,62 @@
+Example Input and Expected Output for LeXIDesk Summarization
+================================================================
+
+Input Text (from sample_legal_text in predict.py):
+---------------------------------------------------
+The court's decision in Marbury v. Madison, 5 U.S. 137 (1803), established the principle of judicial review. This principle is outlined in § 1.3(a) of the legal code. The defendant, Mr. Smith, was subsequently charged under 18 U.S.C. § 1001. All proceedings were documented by the F.B.I. for review.
+
+
+Expected Console Output:
+-------------------------
+==================================================
+--- Summarization Mode ---
+
+Original Text:
+---
+The court's decision in Marbury v. Madison, 5 U.S. 137 (1803), established the principle of judicial review. This principle is outlined in § 1.3(a) of the legal code. The defendant, Mr. Smith, was subsequently charged under 18 U.S.C. § 1001. All proceedings were documented by the F.B.I. for review.
+---
+
+Segmenting input...
+
+Segmented Sentences:
+[1] The court's decision in Marbury v. Madison, 5 U.S. 137 (1803), established the principle of judicial review.
+[2] This principle is outlined in § 1.3(a) of the legal code.
+[3] The defendant, Mr. Smith, was subsequently charged under 18 U.S.C. § 1001.
+[4] All proceedings were documented by the F.B.I. for review.
+
+Computing sentence weights (components: cnn_prob=0.25, textrank=0.35, tfidf=0.30, position=0.10)...
+
+Weights (normalized):
+[1] 0.364 (36.4%)
+[2] 0.210 (21.0%)
+[3] 0.280 (28.0%)
+[4] 0.146 (14.6%)
+
+Summary (top 2 sentences, compression=0.5):
+1) [1] The court's decision in Marbury v. Madison, 5 U.S. 137 (1803), established the principle of judicial review. — 36.4%
+2) [3] The defendant, Mr. Smith, was subsequently charged under 18 U.S.C. § 1001. — 28.0%
+
+==================================================
+
+
+Usage Examples:
+--------------
+1. Basic summarization with default settings:
+   python predict.py --summarize
+
+2. Summarize from a text file:
+   python predict.py --summarize --text-file examples/sample.txt
+
+3. Summarize with compression ratio:
+   python predict.py --summarize --text-file examples/sample.txt --compression 0.2
+
+4. Summarize with top-k sentences:
+   python predict.py --summarize --text-file examples/sample.txt --top-k 3
+
+5. Read from stdin:
+   echo "Your text here..." | python predict.py --summarize --stdin
+
+6. Use embeddings (if sentence-transformers installed):
+   python predict.py --summarize --text-file examples/sample.txt --use-embeddings
+
+
