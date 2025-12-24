@@ -1,0 +1,21 @@
+{
+  "cnn_only": {
+    "description": "CNN model without CRF post-processing",
+    "status": "Not yet evaluated",
+    "metrics": null
+  },
+  "crf_only": {
+    "description": "CRF model without CNN features",
+    "status": "Not yet evaluated",
+    "metrics": null
+  },
+  "hybrid_cnn_crf": {
+    "description": "Hybrid CNN+CRF model (current implementation)",
+    "status": "Evaluated",
+    "metrics": {
+      "f1_score": 0.8,
+      "precision": 0.9523809523809523,
+      "recall": 0.6896551724137931
+    }
+  }
+}

@@ -1,0 +1,4 @@
+doc_id,reference_summary,system_summary,rouge_l_f1
+doc_0,The court's decision in Marbury v. Madison established judicial review. The defendant was charged under 18 U.S.C. § 1001.,The court's decision in Marbury v. Madison established the principle of judicial review. The defendant was charged under 18 U.S.C. § 1001.,0.933
+doc_1,Brown v. Board of Education ruled racial segregation unconstitutional. The decision overturned Plessy v. Ferguson.,Brown v. Board of Education ruled that racial segregation in public schools was unconstitutional. This decision overturned Plessy v. Ferguson.,0.800
+doc_2,"The plaintiff filed a motion for summary judgment. The defendant opposes, contending factual disputes exist.","The plaintiff filed a motion for summary judgment pursuant to Rule 56. The defendant opposes the motion, contending that factual disputes exist.",0.811

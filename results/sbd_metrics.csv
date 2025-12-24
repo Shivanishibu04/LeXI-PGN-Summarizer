@@ -1,0 +1,10 @@
+Metric,Value,Description
+Precision,0.9523809523809523,Proportion of predicted boundaries that are correct
+Recall,0.6896551724137931,Proportion of actual boundaries that were detected
+F1-Score,0.8,Harmonic mean of precision and recall (primary metric)
+Token Accuracy,0.9681528662420382,Overall token-level classification accuracy
+Exact Match Rate,0.2,Document-level exact match (all boundaries correct)
+True Positives,20.0,Correctly identified boundaries
+True Negatives,284.0,Correctly identified non-boundaries
+False Positives,1.0,Incorrectly predicted boundaries
+False Negatives,9.0,Missed boundaries

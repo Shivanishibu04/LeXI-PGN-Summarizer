@@ -1,0 +1,6 @@
+precision,recall,f1_score,accuracy,false_positives,false_negatives,true_positives,true_negatives,doc_id,num_tokens,num_boundaries_gold,num_boundaries_pred
+0.8888888888888888,0.8,0.8421052631578947,0.9620253164556962,1,2,8,68,doc_0,79,10,9
+1.0,0.5,0.6666666666666666,0.953125,0,3,3,58,doc_1,64,6,3
+1.0,1.0,1.0,1.0,0,0,3,54,doc_2,57,3,3
+1.0,0.4,0.5714285714285714,0.9464285714285714,0,3,2,51,doc_3,56,5,2
+1.0,0.8,0.8888888888888888,0.9827586206896551,0,1,4,53,doc_4,58,5,4
