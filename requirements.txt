@@ -39,3 +39,16 @@ nltk
 # git add .
 # git commit -m "your commit message"
 # git push origin main
+fastapi
+uvicorn[standard]
+pydantic
+sentence-transformers
+faiss-cpu
+pymupdf
+transformers
+torch
+streamlit
+openai
+joblib
+scikit-learn
+sklearn-crfsuite

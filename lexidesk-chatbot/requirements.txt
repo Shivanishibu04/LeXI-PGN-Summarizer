@@ -1,0 +1,13 @@
+fastapi
+uvicorn[standard]
+pydantic
+sentence-transformers
+faiss-cpu
+pymupdf
+transformers
+torch
+streamlit
+openai
+joblib
+scikit-learn
+sklearn-crfsuite

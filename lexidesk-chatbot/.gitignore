@@ -1,0 +1,10 @@
+__pycache__/
+index/
+data/*.pkl
+data/*.jsonl
+data/*.csv
+saved_models/
+*.pth
+*.joblib
+.vscode/
+.env
