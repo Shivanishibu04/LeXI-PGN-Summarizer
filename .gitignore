@@ -1,28 +1,77 @@
-# In gitigore
-# Virtual Environment
-venv/
-
-# Python cache
+# Python
 __pycache__/
-*.pyc
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
 
-# VS Code
+# Virtual environments
+venv/
+ENV/
+env/
+
+# IDE
 .vscode/
+.idea/
+*.swp
+*.swo
+*~
 
-# =========================
-# Data & Saved Models
-# =========================
+# Jupyter Notebook
+.ipynb_checkpoints
 
-# Include data folders
-!data/
-!data/raw/
-!data/processed/
+# Model outputs and data
+pgn_output/
+pgn_output_fast/
+*.pt
+*.pth
+*.model
+*.vocab
+*.joblib
 
-# Include saved models folder
-!saved_models/
+# Large dataset files (keep structure, ignore content)
+summariser_dataset/*.csv
+data/raw/*.csv
+data/processed/*.csv
 
-# But still ignore temporary or cache files inside them
-data/**/*.tmp
-data/**/*.log
-saved_models/**/*.tmp
-saved_models/**/*.log
+# Generated files
+*.log
+*.jsonl
+results/
+plots/
+
+# Temporary files
+*.tmp
+*.bak
+.DS_Store
+Thumbs.db
+
+# Keep directory structure but ignore contents
+saved_models/*.pth
+saved_models/*.joblib
+!saved_models/.gitkeep
+
+# Embeddings (large files)
+embeddings/
+*.pkl
+
+# Test outputs
+test_summaries.csv
+evaluation_results.csv
+evaluation_metrics.json

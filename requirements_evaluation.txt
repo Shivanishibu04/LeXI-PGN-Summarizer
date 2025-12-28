@@ -1,0 +1,12 @@
+# Additional requirements for evaluation metrics
+
+# Core evaluation metrics
+rouge-score>=0.1.2
+bert-score>=0.3.13
+
+# Already have nltk from main requirements
+# nltk should already be installed
+
+# Optional but useful
+# matplotlib>=3.3.0  # For plotting results
+# seaborn>=0.11.0    # For visualization
