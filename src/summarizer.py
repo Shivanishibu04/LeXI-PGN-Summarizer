@@ -192,7 +192,7 @@ class SentenceSummarizer:
             tfidf_matrix = vectorizer.fit_transform(sentences)
             
             # Compute document centroid
-            centroid = tfidf_matrix.mean(axis=0)
+            centroid = np.asarray(tfidf_matrix.mean(axis=0))
             
             # Compute cosine similarity between each sentence and centroid
             similarities = cosine_similarity(tfidf_matrix, centroid).flatten()

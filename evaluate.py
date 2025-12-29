@@ -439,6 +439,17 @@ def main():
     
     args = parser.parse_args()
     
+    # Smart config switching: Check if using fast model
+    if 'fast' in args.checkpoint.lower():
+        print("\n" + "!"*80)
+        print("DETECTED FAST MODEL - SWITCHING TO CONFIG_FAST")
+        print("!"*80 + "\n")
+        import config_fast
+        # Update attributes of the imported config module
+        for attribute in dir(config_fast):
+            if not attribute.startswith('__'):
+                setattr(config, attribute, getattr(config_fast, attribute))
+    
     # Set default output path
     if not args.output:
         args.output = str(config.RESULTS_DIR / "evaluation_results.csv")

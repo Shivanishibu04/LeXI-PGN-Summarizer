@@ -199,8 +199,52 @@ def create_datasets(tokenizer):
     return train_dataset, val_dataset
 
 
-# Import remaining functions from train.py
-from train import create_model, train_epoch, validate
+def create_model():
+    """
+    Initialize Pointer-Generator Network using FAST config.
+    
+    Returns:
+        Model instance
+    """
+    print("\n" + "="*80)
+    print("INITIALIZING MODEL (FAST CONFIG)")
+    print("="*80)
+    
+    model = PointerGeneratorNetwork(
+        vocab_size=config.VOCAB_SIZE,
+        embedding_dim=config.EMBEDDING_DIM,
+        encoder_hidden_dim=config.ENCODER_HIDDEN_DIM,
+        decoder_hidden_dim=config.DECODER_HIDDEN_DIM,
+        attention_dim=config.ATTENTION_DIM,
+        encoder_num_layers=config.ENCODER_NUM_LAYERS,
+        decoder_num_layers=config.DECODER_NUM_LAYERS,
+        dropout=config.ENCODER_DROPOUT,
+        pad_idx=config.PAD_IDX,
+        use_coverage=config.USE_COVERAGE
+    )
+    
+    # Move to device
+    model = model.to(config.DEVICE)
+    
+    # Count parameters
+    total_params = sum(p.numel() for p in model.parameters())
+    trainable_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
+    
+    print(f"\nModel architecture (FAST):")
+    print(f"  Total parameters: {total_params:,}")
+    print(f"  Trainable parameters: {trainable_params:,}")
+    print(f"  Device: {config.DEVICE}")
+    print(f"  Embedding dim: {config.EMBEDDING_DIM}")
+    print(f"  Encoder hidden: {config.ENCODER_HIDDEN_DIM}")
+    print(f"  Decoder hidden: {config.DECODER_HIDDEN_DIM}")
+    print(f"  Encoder layers: {config.ENCODER_NUM_LAYERS}")
+    print(f"  Decoder layers: {config.DECODER_NUM_LAYERS}")
+    
+    return model
+
+
+# Import remaining functions from train.py (these use the passed config correctly)
+from train import train_epoch, validate
 
 
 def main():
